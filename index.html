@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="MyStyles.css">
+
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <title></title>
   </head>
@@ -16,14 +17,32 @@
       <svg id = "MapSpace"> </svg>
     </div>
     <div class="column">
+
       <div class="row">
-        <p>Here I have to put the buttons to select transport mode</p>
-        <input type="checkbox" id="myCheckbox" value="¿?">
-        <input type="button" value = "INGRESE" id="myCheckbox2">
+        <h3>Select the transport modes you want to include</h3>
+
+          <input type="checkbox" id="myCheckbox">
+
+        <form id="form" class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary active">
+            <input type="checkbox" name="myCheckBox" id="Walking"> Walking<br>
+          </label>
+          <label class="btn btn-secondary">
+            <input type="checkbox" id="Cycling">Cycling<br>
+          </label>
+          <label class="btn btn-secondary active">
+            <input type="checkbox" id="PT">PT<br>
+          </label>
+          <label class="btn btn-secondary">
+            <input type="checkbox" id="Car">Car<br>
+          </label>
+        </form>
       </div>
+
       <div class="row">
         <p>Here I will add another plot</p>
       </div>
+
     </div>
 
     </div>

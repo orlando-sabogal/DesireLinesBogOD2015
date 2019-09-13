@@ -1,3 +1,15 @@
+
+
+// SEE https://bl.ocks.org/johnnygizmo/3d593d3bf631e102a2dbee64f62d9de4
+
+// d3.select("#Walking").on("change", d => {
+//   if(d3.select("#Walking").property("checked")){
+//     console.log("A2");
+//   } else {
+//     console.log("B2");
+//   } });
+
+//
 const HeightTotal = 700;
 const WidthTotal = 700;
 
@@ -23,6 +35,16 @@ Promise.all([promise1, promise2])
     MyData = values[1];
 
     functionRender(BogotaZats, MyData);
+
+    d3.select("#Walking").on("change", d => {
+      if(d3.select("#Walking").property("checked")){
+        console.log("A2");
+        //Updata MyData and
+        //Run functionRender again?
+      } else {
+        //console.log("B2");
+      } });
+
 });
 
 const functionRender = (BogotaZats,MyData) => {
