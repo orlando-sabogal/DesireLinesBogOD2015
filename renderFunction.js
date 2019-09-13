@@ -5,7 +5,7 @@ const renderDestinations = (
   DestinoOrigen, ZatsOrigenes) => {
 
     // console.log("OrigenDestino", OrigenDestino);
-     console.log("ZatsDestinos", ZatsDestinos);
+    //console.log("ZatsDestinos", ZatsDestinos);
     // console.log("LO SIGUIENTE");
     // console.log("DestinoOrigen", DestinoOrigen);
     // console.log("ZatsOrigenes", ZatsOrigenes);
@@ -30,7 +30,6 @@ const renderDestinations = (
     .attr("stroke-width", d => {
 
       let Temp = d[0].properties.Zona_Num_N;
-      console.log("Temp", Temp);
       const zatRuta = OrigenDestino.filter(item => {
         return item.ZatDestination == Temp
       });
@@ -66,9 +65,7 @@ const renderDestinations = (
  .attr("class", "origins")
  .attr("d", function (it, i) {
    var startx = path.centroid(it[0])[0];
-   console.log("startx",startx);
    var starty = path.centroid(it[0])[1];
-   console.log("starty", starty);
 
    return "M" + startx + "," + starty + " Q" + (startx + homex)/2 + " " + (starty + homey)/1.5 +" " + homex+" "   + homey;
  })

@@ -9,3 +9,13 @@
 .origins:hover{
   stroke: #01665e;
 }
+
+
+.column {
+  float: left;
+  width: 50%;
+}
+
+.row {
+  height: 50%;
+}
