@@ -1,3 +1,11 @@
 .Zats:hover{
   fill: #4d4d4d;
 }
+
+.destinations:hover{
+  stroke: #8c510a;
+}
+
+.origins:hover{
+  stroke: #01665e;
+}
