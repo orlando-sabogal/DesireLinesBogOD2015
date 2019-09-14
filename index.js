@@ -26,7 +26,8 @@ const g = MySpace.append("g");
 // //First promise
 var promise1 = d3.json("BogotaZats.geojson")
 // //Second promise
-var promise2 = d3.csv("DataReal.csv")
+var promise2 = d3.csv("DataLong.csv") // How to parseFloat here???
+//var promise2 = d3.csv("DataReal.csv")
 
 Promise.all([promise1, promise2])
   .then(function(values) {
@@ -34,16 +35,43 @@ Promise.all([promise1, promise2])
     const BogotaZats = values[0];
     MyData = values[1];
 
+    MyData.forEach( (d,i) => {
+      MyData[i].Value = +d.Value;
+      MyData[i].Walk = +d.Walk;
+      //All all the other modes
+
+      MyData[i].Value = +d.Walk; //To preset the Data. Cycling Input is selected
+
+    });
+
+
+
     functionRender(BogotaZats, MyData);
+
 
     d3.select("#Walking").on("change", d => {
       if(d3.select("#Walking").property("checked")){
-        console.log("A2");
-        //Updata MyData and
-        //Run functionRender again?
+        MyData.forEach((item,i) => {
+          //MyData[i].Value = parseFloat(item.Walk) + parseFloat(item.Value);
+          MyData[i].Value = item.Walk + item.Value;
+          console.log(MyData[i].Value);
+        })
       } else {
-        //console.log("B2");
-      } });
+        MyData.forEach((item,i) => {
+          //MyData[i].Value = parseFloat(item.Walk) + parseFloat(item.Value);
+          MyData[i].Value = item.Value - item.Walk ;
+          console.log(MyData[i].Value);
+        })
+      }
+
+      g.selectAll(".destinations")
+      .remove()
+
+      g.selectAll(".origins")
+      .remove()
+
+      functionRender(BogotaZats, MyData);
+    });
 
 });
 
