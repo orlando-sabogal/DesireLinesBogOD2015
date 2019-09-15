@@ -1,3 +1,11 @@
+
+
+body {
+  font-family: 'Montserrat', sans-serif;}
+
+#title {
+  font-family: 'Inconsolata', monospace;}
+
 .Zats:hover{
   fill: #4d4d4d;
 }
