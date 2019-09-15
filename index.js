@@ -1,4 +1,7 @@
 
+//SEE https://bootsnipp.com/snippets/Q0d6E
+//SEE https://www.w3schools.com/howto/howto_css_switch.asp
+//SEE https://www.bootstraptoggle.com/
 
 // SEE https://bl.ocks.org/johnnygizmo/3d593d3bf631e102a2dbee64f62d9de4
 
@@ -26,8 +29,8 @@ const g = MySpace.append("g");
 // //First promise
 var promise1 = d3.json("BogotaZats.geojson")
 // //Second promise
-var promise2 = d3.csv("DataLong.csv") // How to parseFloat here???
-//var promise2 = d3.csv("DataReal.csv")
+//var promise2 = d3.csv("DataLong.csv") // How to parseFloat here???
+var promise2 = d3.csv("DataReal.csv")
 
 Promise.all([promise1, promise2])
   .then(function(values) {
@@ -36,43 +39,105 @@ Promise.all([promise1, promise2])
     MyData = values[1];
 
     MyData.forEach( (d,i) => {
+      MyData[i].PEATON = +d.PEATON;
+      MyData[i].Bicicleta = +d.Bicicleta;
+      MyData[i].Transmilenio = +d.Transmilenio;
+      MyData[i].TPCySITP = +d.TPCySITP;
+      MyData[i].ALIMENTADOR = +d.ALIMENTADOR;
+      MyData[i].TAXI = +d.TAXI;
+      MyData[i].MOTO = +d.MOTO;
+      MyData[i].AUTO = +d.AUTO;
+      //To preset the Data. Walking Input is selected
       MyData[i].Value = +d.Value;
-      MyData[i].Walk = +d.Walk;
-      //All all the other modes
-
-      MyData[i].Value = +d.Walk; //To preset the Data. Cycling Input is selected
-
+      MyData[i].Value = +d.PEATON;
     });
-
-
 
     functionRender(BogotaZats, MyData);
 
 
+  //Here starts the whole sectio of listening the buttons
+  //How to optimize this?
     d3.select("#Walking").on("change", d => {
       if(d3.select("#Walking").property("checked")){
-        MyData.forEach((item,i) => {
-          //MyData[i].Value = parseFloat(item.Walk) + parseFloat(item.Value);
-          MyData[i].Value = item.Walk + item.Value;
-          console.log(MyData[i].Value);
-        })
+        MyData.forEach((item,i) => {MyData[i].Value = item.PEATON + item.Value; })
       } else {
-        MyData.forEach((item,i) => {
-          //MyData[i].Value = parseFloat(item.Walk) + parseFloat(item.Value);
-          MyData[i].Value = item.Value - item.Walk ;
-          console.log(MyData[i].Value);
-        })
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.PEATON; })
       }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
 
-      g.selectAll(".destinations")
-      .remove()
+    d3.select("#Cycling").on("change", d => {
+      if(d3.select("#Cycling").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.Bicicleta + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.Bicicleta; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
 
-      g.selectAll(".origins")
-      .remove()
+    d3.select("#Transmilenio").on("change", d => {
+      if(d3.select("#Transmilenio").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.Transmilenio + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.Transmilenio; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
 
-      functionRender(BogotaZats, MyData);
-    });
+    d3.select("#TPCandSITP").on("change", d => {
+      if(d3.select("#TPCandSITP").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.TPCySITP + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.TPCySITP; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
 
+    d3.select("#Alimentador").on("change", d => {
+      if(d3.select("#Alimentador").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.ALIMENTADOR + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.ALIMENTADOR; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
+
+    d3.select("#Taxi").on("change", d => {
+      if(d3.select("#Taxi").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.TAXI + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.TAXI; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
+
+    d3.select("#Moto").on("change", d => {
+      if(d3.select("#Moto").property("checked")){
+        MyData.forEach((item,i) => {MyData[i].Value = item.MOTO + item.Value; })
+      } else {
+        MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.MOTO; })
+      }
+      g.selectAll(".destinations").remove()
+      g.selectAll(".origins").remove()
+      functionRender(BogotaZats, MyData); });
+
+      d3.select("#Car").on("change", d => {
+        if(d3.select("#Car").property("checked")){
+          MyData.forEach((item,i) => {MyData[i].Value = item.AUTO + item.Value; })
+        } else {
+          MyData.forEach((item,i) => {MyData[i].Value = item.Value - item.AUTO; })
+        }
+        g.selectAll(".destinations").remove()
+        g.selectAll(".origins").remove()
+        functionRender(BogotaZats, MyData); });
+
+///////Finish listening the Inputs
 });
 
 const functionRender = (BogotaZats,MyData) => {

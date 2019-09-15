@@ -1,5 +1,6 @@
 
 #ponderador_calibrado_viajes1
+
 library(tidyverse)
 setwd("~/Dropbox/IDB Uber Bog/Analysis_April2019/OriginalData")
 
@@ -9,11 +10,21 @@ Data <- as_tibble(Data)
 MOD <- Data %>% filter(dia_habil1 =="S") %>% 
   mutate(zat_origen1 = as.numeric(zat_origen1),
          zat_destino1 = as.numeric(zat_destino1)) %>% 
-  group_by(zat_origen1,zat_destino1) %>% 
+  group_by(zat_origen1,zat_destino1, medio_predominante1) %>% 
   summarise(Total = sum(ponderador_calibrado_viajes1,na.rm = TRUE))
 
-names(MOD) <- c("ZatOrigin", "ZatDestination", "Value")
+
+MOD <- MOD %>% pivot_wider(id_cols = c("zat_origen1","zat_destino1"),
+                           names_from = medio_predominante1,
+                           values_from = Total) %>% 
+  replace(is.na(.),0)
+
+names(MOD)
+names(MOD)[c(1,2)] <- c("ZatOrigin","ZatDestination")
+names(MOD)[7] <- "Bicicleta"
+names(MOD)[4] <- "TPCySITP"
 MOD <- MOD[complete.cases(MOD),]
+MOD$Value <- 0
 
 
 library(sf)
