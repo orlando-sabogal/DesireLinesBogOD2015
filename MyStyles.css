@@ -6,6 +6,8 @@ body {
 #title {
   font-family: 'Inconsolata', monospace;}
 
+/* Map Styles */
+
 .Zats:hover{
   fill: #4d4d4d;
 }
@@ -28,8 +30,15 @@ body {
   height: 50%;
 }
 
+/* Styles for the Arc Diagrams */
 
+circle {
+  fill-opacity: 1;
+}
 
+.arcPaths {
+  stroke-opacity: 0.05;
+}
 
 /* The switch - the box around the slider */
 .switch {

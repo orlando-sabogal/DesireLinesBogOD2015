@@ -53,7 +53,7 @@ Promise.all([promise1, promise2])
     });
 
     functionRender(BogotaZats, MyData);
-    renderChord(BogotaZats, MyData);
+    renderArc(BogotaZats, MyData);
 
   //Here starts the whole sectio of listening the buttons
   //How to optimize this?
@@ -115,7 +115,9 @@ Promise.all([promise1, promise2])
       }
       g.selectAll(".destinations").remove()
       g.selectAll(".origins").remove()
-      functionRender(BogotaZats, MyData); });
+      functionRender(BogotaZats, MyData);
+
+      renderArc(BogotaZats, MyData);});
 
     d3.select("#Moto").on("change", d => {
       if(d3.select("#Moto").property("checked")){
@@ -231,88 +233,89 @@ function clicked(Zat, MyData, BogotaZats, path) {
 
 //Lets try to make a Chord!
 
-function renderChord(BogotaZats, MyData) {
+function renderArc(BogotaZats, MyData) {
 
-///Not Working
-  // DataChord = [];
-  //
-  // MyData.map( (d,i) => {
-  //
-  //   DataTemp = {
-  //     Source: d.ZatOrigin,
-  //     Target: d.ZatDestination,
-  //     Value: d.Value
-  //   };
-  // DataChord.push(DataTemp);
-  // });
-  //
-  // var mpr = chordMpr(DataChord);
-  //
-  //
-  // mpr
-  //   .addValuesToMap('Source')
-  //   .addValuesToMap('Target')
-  // //   .setFilter(function(row, a, b) {
-  // //       return (row.root === a.name && row.node === b.name)
-  // //     })
-  // //   .setAccessor(function(recs, a, b) {
-  // //       if (!recs[0]) return 0;
-  // //       return +recs[0].count;
-  // //     });
-  // // drawChords(mpr.getMatrix(), mpr.getMap());
-  // //
-  //
-  // console.log(mpr);
-///Not Working
+MyData2 = MyData.filter(item => {
+  return item.Value >0
+});
 
-  var chordPlot = d3.select("#chordPlot")
-    .attr("width", 440)
-    .attr("height", 440)
+NodesTemp = [];
+
+MyData2.forEach( (d,i) => {
+    Temp = d.ZatOrigin
+    //console.log(Temp);
+    NodesTemp[i] = Temp;
+})
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+}
+
+allNodes = NodesTemp.filter(onlyUnique)
+//console.log(allNodes);
+//console.log(allNodes.length);
+
+//Souce: https://www.d3-graph-gallery.com/graph/arc_basic.html
+
+  var margin = {top: 20, right: 30, bottom: 20, left: 30};
+  width = 1600 - margin.left - margin.right;
+  height = 300 - margin.top - margin.bottom;
+
+
+// append the svg object to the body of the page
+var svg = d3.select("#arcPlot")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
   .append("g")
-    .attr("transform", "translate(220,220)")
+    .attr("transform",
+          "translate(" + margin.left + "," + margin.top + ")");
 
-// create input data: a square matrix that provides flow between entities
-var matrix = [
-  [11975,  5871, 8916, 2868],
-  [ 1951, 10048, 2060, 6171],
-  [ 8010, 16145, 8090, 8045],
-  [ 1013,   990,  940, 6907]
-];
+  // List of node names
 
-// give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
-var res = d3.chord()
-    .padAngle(0.05)     // padding between entities (black arc)
-    .sortSubgroups(d3.descending)
-    (matrix)
+  //allNodes
 
-// add the groups on the inner part of the circle
-chordPlot
-  .datum(res)
-  .append("g")
-  .selectAll("g")
-  .data(function(d) { return d.groups; })
+  // A linear scale to position the nodes on the X axis
+  var x = d3.scalePoint()
+    .range([0, 500])
+    .domain(allNodes)
+    //.padding(0.5)
+    //.round(true)
+
+  // Add the circle for the nodes
+  svg
+    //.selectAll("mynodes")
+    .selectAll("circle")
+    .data(allNodes)
+    .enter()
+    .append("circle")
+      //.atrr("")
+      .attr("cx", d => x(d) )
+      .attr("cy", height-30)
+      .attr("r", 1)
+      .style("fill", "#69b3a2")
+
+
+
+// Arcs paths
+
+svg
+  .selectAll(".arcPaths")
+  .data(MyData2)
   .enter()
-  .append("g")
-  .append("path")
-    .style("fill", "grey")
-    .style("stroke", "black")
-    .attr("d", d3.arc()
-      .innerRadius(200)
-      .outerRadius(210)
-    )
+  .append('path')
+  .attr("class", "arcPaths")
+  .attr('d', function (d) {
+    start = x(d.ZatOrigin)    // X position of start node on the X axis
+    end = x(d.ZatDestination)      // X position of end node
+    return ['M', start, height-30,    // the arc starts at the coordinate x=start, y=height-30 (where the starting node is)
+      'A',                            // This means we're gonna build an elliptical arc
+      (start - end)/2, ',',    // Next 2 lines are the coordinates of the inflexion point. Height of this point is proportional with start - end distance
+      (start - end)/2, 0, 0, ',',
+      start < end ? 1 : 0, end, ',', height-30] // We always want the arc on top. So if end is before start, putting 0 here turn the arc upside down.
+      .join(' ');
+  })
+  .style("fill", "none")
+  .attr("stroke", "black")
 
-// Add the links between groups
-chordPlot
-  .datum(res)
-  .append("g")
-  .selectAll("path")
-  .data(function(d) { return d; })
-  .enter()
-  .append("path")
-    .attr("d", d3.ribbon()
-      .radius(200)
-    )
-    .style("fill", "#69b3a2")
-    .style("stroke", "black");
 
 };
