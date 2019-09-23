@@ -54,6 +54,7 @@ Promise.all([promise1, promise2])
 
     functionRender(BogotaZats, MyData);
     renderArc(BogotaZats, MyData);
+    renderChord(MyData);
 
   //Here starts the whole sectio of listening the buttons
   //How to optimize this?
@@ -231,7 +232,7 @@ function clicked(Zat, MyData, BogotaZats, path) {
 }
 
 
-//Lets try to make a Chord!
+//Lets try to make an Arc!
 
 function renderArc(BogotaZats, MyData) {
 
@@ -317,5 +318,34 @@ svg
   .style("fill", "none")
   .attr("stroke", "black")
 
+
+};
+
+
+// Let's make a chordPlot
+
+function renderChord (MyData) {
+
+  MyData2 = MyData.filter(item => {
+    return item.Value >0
+  });
+
+  function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+  }
+
+  ZatsTemp = [];
+
+  MyData2.forEach( (d,i) => {
+      Temp = d.ZatOrigin;
+      ZatsTemp.push(Temp);
+      Temp = d.ZatDestination;
+      ZatsTemp.push(Temp);
+  })
+
+  allZats = ZatsTemp.filter(onlyUnique)
+  console.log(allZats);
+
+  
 
 };
