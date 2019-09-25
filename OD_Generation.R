@@ -40,3 +40,4 @@ MOD <- MOD %>% filter(ZatOrigin %in% Zats2$Zona_Num_N)
 MOD <- MOD %>% filter(ZatDestination %in% Zats2$Zona_Num_N)
 
 write_delim(MOD, "DataReal.csv", delim = ",")
+

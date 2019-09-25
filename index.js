@@ -28,6 +28,7 @@ const g = MySpace.append("g");
 
 // //First promise
 var promise1 = d3.json("BogotaZats.geojson")
+
 // //Second promise
 //var promise2 = d3.csv("DataLong.csv") // How to parseFloat here???
 var promise2 = d3.csv("DataReal.csv")
@@ -229,6 +230,11 @@ function clicked(Zat, MyData, BogotaZats, path) {
                          homex, homey,
                          OrigenDestino, ZatsDestinos,
                          DestinoOrigen, ZatsOrigenes) // From renderFunctions.js
+
+
+  //SelectedZat
+    renderChord2(MyData, SelectedZat); //Experimental. Chech if MyData is the right object.
+
 }
 
 
@@ -344,8 +350,160 @@ function renderChord (MyData) {
   })
 
   allZats = ZatsTemp.filter(onlyUnique)
-  console.log(allZats);
+  //console.log(allZats);
 
-  
+  MatrixChord = [];
+
+  allZats.forEach(d => {
+    VectorTemp = Array(allZats.length).fill(0);
+    DataTemp = MyData2.filter(item => item.ZatOrigin == +d);
+    //console.log(DataTemp);
+    allZats.forEach( (destino,i) => {
+      DataTempDestino = DataTemp.filter(item => item.ZatDestination == destino);
+      //console.log(DataTempDestino);
+      if (DataTempDestino.length>0){
+        Total = DataTempDestino[0].Value;
+        //if (Total >0) {console.log(Total);};
+        VectorTemp[i] = Total;
+      };
+    });
+    MatrixChord.push(VectorTemp)
+  });
+
+
+  //
+  ChordTest = d3.select("#ChordSVG")
+    .attr("width", 880)
+    .attr("height", 880)
+    .append("g")
+      .attr("transform", "translate(440,440)");
+
+  res = d3.chord()
+        .padAngle(0.05)     // padding between entities (black arc)
+        .sortSubgroups(d3.descending)
+        (MatrixChord)
+
+// add the groups on the inner part of the circle
+ChordTest
+  .datum(res)
+  .append("g")
+  .selectAll("g")
+  .data(function(d) { return d.groups; })
+  .enter()
+  .append("g")
+  .append("path")
+    .style("fill", "grey")
+    .style("stroke", "black")
+    .attr("d", d3.arc()
+      .innerRadius(400)
+      .outerRadius(420)
+    )
+
+// Add the links between groups
+ChordTest
+  .datum(res)
+  .append("g")
+  .selectAll("path")
+  .data(function(d) { return d; })
+  .enter()
+  .append("path")
+    .attr("d", d3.ribbon()
+      .radius(400)
+    )
+    .style("fill", "#69b3a2")
+    .style("stroke", "black");
+
+  //
+
+};
+
+
+function renderChord2 (MyData, SelectedZat) {
+
+  MyData2 = MyData.filter(item => {
+    return item.Value >0
+  });
+
+  function onlyUnique(value, index, self) {
+      return self.indexOf(value) === index;
+  }
+
+  ZatsTemp = [];
+
+  MyData2.forEach( (d,i) => {
+      Temp = d.ZatOrigin;
+      ZatsTemp.push(Temp);
+      Temp = d.ZatDestination;
+      ZatsTemp.push(Temp);
+  })
+
+  allZats = ZatsTemp.filter(onlyUnique)
+  //console.log(allZats);
+
+  MatrixChord = [];
+
+  allZats.forEach(d => {
+    VectorTemp = Array(allZats.length).fill(0);
+    DataTemp = MyData2.filter(item => item.ZatOrigin == +d);
+    //console.log(DataTemp);
+    allZats.forEach( (destino,i) => {
+      DataTempDestino = DataTemp.filter(item => item.ZatDestination == destino);
+      //console.log(DataTempDestino);
+      if (DataTempDestino.length>0){
+        Total = DataTempDestino[0].Value;
+        //if (Total >0) {console.log(Total);};
+        VectorTemp[i] = Total;
+      };
+    });
+    MatrixChord.push(VectorTemp)
+  });
+
+  VectorColor = allZats.indexOf(SelectedZat.toString());
+  console.log(SelectedZat);
+  console.log(VectorColor);
+
+  //
+  ChordTest = d3.select("#ChordSVG")
+    .attr("width", 880)
+    .attr("height", 880)
+    .append("g")
+      .attr("transform", "translate(440,440)");
+
+  res = d3.chord()
+        .padAngle(0.05)     // padding between entities (black arc)
+        .sortSubgroups(d3.descending)
+        (MatrixChord)
+
+// add the groups on the inner part of the circle
+ChordTest
+  .datum(res)
+  .append("g")
+  .selectAll("g")
+  .data(function(d) { return d.groups; })
+  .enter()
+  .append("g")
+  .append("path")
+    .style("fill", "grey")
+    .style("stroke", "black")
+    .attr("d", d3.arc()
+      .innerRadius(400)
+      .outerRadius(420)
+    )
+
+// Add the links between groups
+ChordTest
+  .datum(res)
+  .append("g")
+  .selectAll("path")
+  .data(function(d) { return d; })
+  .enter()
+  .append("path")
+    .attr("d", d3.ribbon()
+      .radius(400)
+    )
+    .style("fill", "#69b3a2")
+    .style("stroke", "black");
+
+  //
 
 };
