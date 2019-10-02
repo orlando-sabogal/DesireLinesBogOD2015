@@ -1,0 +1,14 @@
+{
+  "name": "@orlando-sabogal/mobility-patterns-i",
+  "main": "d/c85c143222c77f8a.js",
+  "version": "819.0.0",
+  "homepage": "https://observablehq.com/@orlando-sabogal/mobility-patterns-i",
+  "author": {
+    "name": "Orlando Sabogal",
+    "url": "https://observablehq.com/@orlando-sabogal"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
