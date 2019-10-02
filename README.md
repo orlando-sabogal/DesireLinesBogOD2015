@@ -1,4 +1,3 @@
-This is a personal project.
-My main goal is to play around with D3.js and learn how to implement visualizations.
-
-I hope to get something soon.  
+This poject started as a way for force myself to learn about data visualization and D3. <br>
+Soon I realized that people working in datavis is using **observable**, so I decided to move the development and experiments there. In the folder *FirstDraf* you can find the initial development I was using. I will include in this repo all the code I produce in observable, every observable notebook will be a folder. <br>
+You can see my [Observable Account](https://observablehq.com/@orlando-sabogal). See [this notebook](https://observablehq.com/@orlando-sabogal/mobility-patterns-i) for the desire lines.

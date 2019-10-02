@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <!-- <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet"> -->
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Montserrat&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="MyStyles.css">
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+
+    <script src="https://rawgit.com/sghall/7859113/raw/422da4401f7d4fc0352a7c49961d24f03716be7a/gistfile1.js"></script>
+
+    <title></title>
+  </head>
+  <body>
+
+      <p id = "title"> <span style="font-size:250%; font-weight: bold;"> Mobility Patterns </span> by <a href="https://orlando-sabogal.github.io/"> Orlando Sabogal </a> </p>
+
+    <!-- <p style="font-size:150%;"> Mobility Patterns </p>
+    <p> by <a href="https://orlando-sabogal.github.io/"> Orlando Sabogal </a> </p>
+    <br> -->
+    <!-- <div class="row">
+    </div> -->
+    <div class="row">
+    <div class="column">
+      <svg id = "MapSpace"> </svg>
+    </div>
+    <div class="column">
+
+      <div class="row">
+        <h3>Select the transport modes you want to include</h3>
+
+        <form>
+
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Walking" checked>
+              <span class="slider round"></span>
+            </label>
+            Walking
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Cycling">
+              <span class="slider round"></span>
+            </label>
+            Cycling
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Transmilenio">
+              <span class="slider round"></span>
+            </label>
+            Transmilenio
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="TPCandSITP">
+              <span class="slider round"></span>
+            </label>
+            TPC and SITP
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Alimentador">
+              <span class="slider round"></span>
+            </label>
+            Alimentador
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Taxi">
+              <span class="slider round"></span>
+            </label>
+            Taxi
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Moto">
+              <span class="slider round"></span>
+            </label>
+            Moto
+          </div>
+
+          <div>
+            <label class="switch">
+              <input type="checkbox" id="Car">
+              <span class="slider round"></span>
+            </label>
+            Car
+          </div>
+        </form>
+
+      </div>
+
+      <div class="row">
+        <br>
+        <h3>Trips Arc Diagram</h3>
+        <!-- <svg id = "chordPlot"> </svg> -->
+        <svg id = "arcPlot"> </svg>
+
+
+      <!-- <div >
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        Cycling
+      </div>
+      <div>
+      </div>
+      <div >
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider round"></span>
+        </label>
+        Walking
+      </div> -->
+
+
+      </div>
+
+    </div>
+
+    </div>
+    <div class="row">
+      <h1>This is a Chord</h1>
+      <svg id = "ChordSVG"> </svg>
+    </div>
+
+
+    <script src = "index.js"> </script>
+    <script src = "renderFunction.js"> </script>
+  </body>
+</html>
