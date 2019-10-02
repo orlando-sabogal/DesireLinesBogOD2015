@@ -1,0 +1,14 @@
+{
+  "name": "@orlando-sabogal/mobility-patterns-ii",
+  "main": "d/e6ddb25b03f39e7e.js",
+  "version": "85.0.0",
+  "homepage": "https://observablehq.com/@orlando-sabogal/mobility-patterns-ii",
+  "author": {
+    "name": "Orlando Sabogal",
+    "url": "https://observablehq.com/@orlando-sabogal"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
